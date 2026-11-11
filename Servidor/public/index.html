@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ordem Certa OS - Login</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="styles.css?v=login-split-20260707" />
+    <link rel="stylesheet" href="desktop.css" />
+  </head>
+  <body>
+    <section class="login-screen" id="loginScreen">
+      <form class="login-card" id="loginForm">
+        <div class="brand-mark large">OC</div>
+        <h1>Ordem Certa</h1>
+        <p>Login obrigatorio para acessar o sistema.</p>
+        <label>
+          Usuario
+          <input
+            id="loginUser"
+            type="text"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            required
+          />
+        </label>
+        <label>
+          Senha
+          <input
+            id="loginPassword"
+            type="password"
+            autocomplete="off"
+            data-lpignore="true"
+            data-1p-ignore="true"
+            required
+          />
+        </label>
+        <button class="primary-button full" type="submit">Entrar</button>
+        <div class="login-message" id="loginMessage"></div>
+      </form>
+    </section>
+
+    <script>
+      (() => {
+        const sessionKey = "ordem-certa-desktop-session-v1";
+        const maxAgeMs = 8 * 60 * 60 * 1000;
+
+        function validSession() {
+          try {
+            const session = JSON.parse(
+              sessionStorage.getItem(sessionKey) ||
+                localStorage.getItem(sessionKey),
+            );
+            return session?.user && Date.now() - session.startedAt <= maxAgeMs;
+          } catch {
+            return false;
+          }
+        }
+
+        if (validSession()) {
+          window.location.replace(`app.html?session=${Date.now()}`);
+          return;
+        }
+
+        const form = document.querySelector("#loginForm");
+        const userInput = document.querySelector("#loginUser");
+        const passwordInput = document.querySelector("#loginPassword");
+        const message = document.querySelector("#loginMessage");
+        const button = form.querySelector("button[type='submit']");
+
+        form.addEventListener("submit", async (event) => {
+          event.preventDefault();
+          const login = userInput.value.trim();
+          const password = passwordInput.value;
+
+          message.textContent = "Entrando...";
+          message.className = "login-message";
+          button.disabled = true;
+
+          try {
+            const response = await fetch("/api/login", {
+              method: "POST",
+              credentials: "same-origin",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ login, password }),
+            });
+            const payload = await response.json().catch(() => ({}));
+            if (!response.ok)
+              throw new Error(payload.error || "Usuario ou senha invalidos.");
+
+            const session = JSON.stringify({
+              userId: payload.user.id,
+              user: payload.user,
+              startedAt: Date.now(),
+            });
+            sessionStorage.setItem(sessionKey, session);
+            localStorage.setItem(sessionKey, session);
+            window.location.replace(`app.html?login=${Date.now()}`);
+          } catch (error) {
+            message.textContent = error.message || "Nao foi possivel logar.";
+            message.className = "login-message error";
+            button.disabled = false;
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

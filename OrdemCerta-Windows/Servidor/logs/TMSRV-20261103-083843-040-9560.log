@@ -1,0 +1,10 @@
+{"at":"2026-11-03T11:38:43.194Z","hora":"03/11/2026, 08:38:43","event":"TMSRV.ready","host":"127.0.0.1","port":4173}
+{"at":"2026-11-03T11:39:03.909Z","hora":"03/11/2026, 08:39:03","event":"TMSRV.OPERACAO_RECUSADA","requisicao":"f9ca9800","usuario":"nao autenticado","metodo":"GET","ip":"127.0.0.1","rota":"/favicon.ico","status":404,"motivo":"Arquivo nao encontrado."}
+{"at":"2026-11-03T11:39:11.324Z","hora":"03/11/2026, 08:39:11","event":"TMSRV.OPERACAO_RECUSADA","requisicao":"eb275eb7","usuario":"nao autenticado","metodo":"GET","ip":"127.0.0.1","rota":"/favicon.ico","status":404,"motivo":"Arquivo nao encontrado."}
+{"at":"2026-11-03T11:39:19.076Z","hora":"03/11/2026, 08:39:19","event":"TMSRV.USUARIO_CONECTADO","requisicao":"0cedc6c2","usuario":"Davi","metodo":"POST","ip":"127.0.0.1","rota":"/api/login"}
+{"at":"2026-11-03T11:39:20.432Z","hora":"03/11/2026, 08:39:20","event":"TMSRV.INTERFACE_TELA","requisicao":"e9b3244d","usuario":"Davi","metodo":"POST","ip":"127.0.0.1","rota":"/api/activity","controle":"dashboard","acao":"Dashboard aberto","origem":"informada pelo cliente"}
+{"at":"2026-11-03T11:39:20.760Z","hora":"03/11/2026, 08:39:20","event":"TMSRV.BASE_CARREGADA","requisicao":"691b2083","usuario":"Davi","metodo":"GET","ip":"127.0.0.1","rota":"/api/state","revisao":134}
+{"at":"2026-11-03T11:39:40.234Z","hora":"03/11/2026, 08:39:40","event":"TMSRV.USUARIO_CONECTADO","requisicao":"bd12508f","usuario":"Davi","metodo":"POST","ip":"127.0.0.1","rota":"/api/login"}
+{"at":"2026-11-03T11:39:41.141Z","hora":"03/11/2026, 08:39:41","event":"TMSRV.INTERFACE_TELA","requisicao":"3ce0bf47","usuario":"Davi","metodo":"POST","ip":"127.0.0.1","rota":"/api/activity","controle":"dashboard","acao":"Dashboard aberto","origem":"informada pelo cliente"}
+{"at":"2026-11-03T11:39:41.450Z","hora":"03/11/2026, 08:39:41","event":"TMSRV.BASE_CARREGADA","requisicao":"ebae29ee","usuario":"Davi","metodo":"GET","ip":"127.0.0.1","rota":"/api/state","revisao":135}
+{"at":"2026-11-03T11:39:41.895Z","hora":"03/11/2026, 08:39:41","event":"TMSRV.BASE_CARREGADA","requisicao":"32c13ed1","usuario":"Davi","metodo":"GET","ip":"127.0.0.1","rota":"/api/state","revisao":135}

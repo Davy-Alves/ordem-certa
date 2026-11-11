@@ -1,0 +1,10 @@
+[DBSRV] Iniciando migracao de 41111 registros de historico para a nova tabela...
+[DBSRV] Migracao concluida! O JSON esta limpo e ultraleve.
+{"at":"2026-11-03T12:43:06.096Z","hora":"03/11/2026, 09:43:06","event":"DBSRV.INICIADO","host":"127.0.0.1","porta":4174}
+{"at":"2026-11-03T12:43:06.138Z","hora":"03/11/2026, 09:43:06","event":"DBSRV.CONTAS_CARREGADAS","contas":18,"ordens":1626,"revisao":135}
+{"at":"2026-11-03T12:43:25.584Z","hora":"03/11/2026, 09:43:25","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":136,"registros":2}
+{"at":"2026-11-03T12:44:10.566Z","hora":"03/11/2026, 09:44:10","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":137,"registros":2}
+{"at":"2026-11-03T12:44:18.881Z","hora":"03/11/2026, 09:44:18","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":138,"registros":2}
+{"at":"2026-11-03T12:44:27.914Z","hora":"03/11/2026, 09:44:27","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":139,"registros":2}
+{"at":"2026-11-03T12:45:19.878Z","hora":"03/11/2026, 09:45:19","event":"DBSRV.OPERACAO_RECUSADA","operacao":"commit","ip":"127.0.0.1","status":500,"motivo":"UNIQUE constraint failed: history_entries.id"}
+{"at":"2026-11-03T12:45:29.520Z","hora":"03/11/2026, 09:45:29","event":"DBSRV.OPERACAO_RECUSADA","operacao":"commit","ip":"127.0.0.1","status":500,"motivo":"UNIQUE constraint failed: history_entries.id"}

@@ -1,0 +1,13 @@
+{"at":"2026-10-30T11:50:40.096Z","hora":"30/10/2026, 08:50:40","event":"DBSRV.INICIADO","host":"127.0.0.1","porta":4174}
+{"at":"2026-10-30T11:50:40.233Z","hora":"30/10/2026, 08:50:40","event":"DBSRV.CONTAS_CARREGADAS","contas":18,"ordens":1626,"revisao":101}
+{"at":"2026-10-30T11:51:39.640Z","hora":"30/10/2026, 08:51:39","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":102,"registros":2}
+{"at":"2026-10-30T11:51:47.317Z","hora":"30/10/2026, 08:51:47","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":103,"registros":2}
+{"at":"2026-10-30T11:51:53.005Z","hora":"30/10/2026, 08:51:53","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":104,"registros":2}
+{"at":"2026-10-30T11:51:57.518Z","hora":"30/10/2026, 08:51:57","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":105,"registros":2}
+{"at":"2026-10-30T11:52:06.692Z","hora":"30/10/2026, 08:52:06","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":106,"registros":2}
+{"at":"2026-10-30T11:52:15.413Z","hora":"30/10/2026, 08:52:15","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":107,"registros":2}
+{"at":"2026-10-30T11:52:33.031Z","hora":"30/10/2026, 08:52:33","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":108,"registros":2}
+{"at":"2026-10-30T11:52:38.147Z","hora":"30/10/2026, 08:52:38","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":109,"registros":2}
+{"at":"2026-10-30T12:05:22.253Z","hora":"30/10/2026, 09:05:22","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":110,"registros":2}
+{"at":"2026-10-30T12:05:27.976Z","hora":"30/10/2026, 09:05:27","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":111,"registros":2}
+{"at":"2026-10-30T12:50:40.589Z","hora":"30/10/2026, 09:50:40","event":"DBSRV.BACKUP_CONCLUIDO","arquivo":"ordem-certa-2026-10-30T12-50-40-105Z.sqlite"}

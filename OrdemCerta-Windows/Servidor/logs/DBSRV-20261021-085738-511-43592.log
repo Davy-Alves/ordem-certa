@@ -1,0 +1,9 @@
+{"at":"2026-10-21T11:57:38.990Z","hora":"21/10/2026, 08:57:38","event":"DBSRV.INICIADO","host":"127.0.0.1","porta":4174}
+{"at":"2026-10-21T11:57:39.323Z","hora":"21/10/2026, 08:57:39","event":"DBSRV.CONTAS_CARREGADAS","contas":21,"ordens":1419,"revisao":10}
+{"at":"2026-10-21T12:57:39.366Z","hora":"21/10/2026, 09:57:39","event":"DBSRV.BACKUP_CONCLUIDO","arquivo":"ordem-certa-2026-10-21T12-57-39-039Z.sqlite"}
+{"at":"2026-10-21T13:57:39.420Z","hora":"21/10/2026, 10:57:39","event":"DBSRV.BACKUP_CONCLUIDO","arquivo":"ordem-certa-2026-10-21T13-57-39-042Z.sqlite"}
+{"at":"2026-10-21T14:57:39.791Z","hora":"21/10/2026, 11:57:39","event":"DBSRV.BACKUP_CONCLUIDO","arquivo":"ordem-certa-2026-10-21T14-57-39-081Z.sqlite"}
+{"at":"2026-10-21T15:24:47.189Z","hora":"21/10/2026, 12:24:47","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":11,"registros":102}
+{"at":"2026-10-21T15:57:39.439Z","hora":"21/10/2026, 12:57:39","event":"DBSRV.BACKUP_CONCLUIDO","arquivo":"ordem-certa-2026-10-21T15-57-39-075Z.sqlite"}
+{"at":"2026-10-21T16:57:39.453Z","hora":"21/10/2026, 13:57:39","event":"DBSRV.BACKUP_CONCLUIDO","arquivo":"ordem-certa-2026-10-21T16-57-39-083Z.sqlite"}
+{"at":"2026-10-21T17:57:41.403Z","hora":"21/10/2026, 14:57:41","event":"DBSRV.BACKUP_CONCLUIDO","arquivo":"ordem-certa-2026-10-21T17-57-39-079Z.sqlite"}

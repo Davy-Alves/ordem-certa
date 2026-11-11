@@ -1,0 +1,5 @@
+{"at":"2026-11-03T16:18:47.333Z","hora":"03/11/2026, 13:18:47","event":"TMSRV.ready","host":"127.0.0.1","port":4173}
+{"at":"2026-11-03T16:18:50.856Z","hora":"03/11/2026, 13:18:50","event":"TMSRV.OPERACAO_RECUSADA","requisicao":"66cf2013","usuario":"nao autenticado","metodo":"GET","ip":"127.0.0.1","rota":"/api/state-version","status":503,"motivo":"DBSRV indisponivel. Verifique o servidor de dados."}
+{"at":"2026-11-03T16:18:50.914Z","hora":"03/11/2026, 13:18:50","event":"TMSRV.OPERACAO_RECUSADA","requisicao":"678ec031","usuario":"nao autenticado","metodo":"GET","ip":"127.0.0.1","rota":"/api/presence","status":503,"motivo":"DBSRV indisponivel. Verifique o servidor de dados."}
+{"at":"2026-11-03T16:19:05.982Z","hora":"03/11/2026, 13:19:05","event":"TMSRV.BASE_CARREGADA","requisicao":"f7d2f753","usuario":"Davi","metodo":"GET","ip":"127.0.0.1","rota":"/api/state","revisao":153}
+{"at":"2026-11-03T16:19:06.227Z","hora":"03/11/2026, 13:19:06","event":"TMSRV.INTERFACE_TELA","requisicao":"6a1145d3","usuario":"Davi","metodo":"POST","ip":"127.0.0.1","rota":"/api/activity","controle":"dashboard","acao":"Dashboard aberto","origem":"informada pelo cliente"}

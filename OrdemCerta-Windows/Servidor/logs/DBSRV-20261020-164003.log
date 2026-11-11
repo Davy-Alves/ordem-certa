@@ -1,0 +1,2 @@
+{"at":"2026-10-20T19:40:03.806Z","event":"DBSRV.ready","host":"127.0.0.1","port":4174}
+{"at":"2026-10-20T20:40:04.254Z","event":"backup.complete","file":"ordem-certa-2026-10-20T20-40-03-877Z.sqlite"}

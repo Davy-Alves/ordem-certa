@@ -1,0 +1,7 @@
+{"at":"2026-10-30T13:06:33.598Z","hora":"30/10/2026, 10:06:33","event":"DBSRV.INICIADO","host":"127.0.0.1","porta":4174}
+{"at":"2026-10-30T13:06:33.745Z","hora":"30/10/2026, 10:06:33","event":"DBSRV.CONTAS_CARREGADAS","contas":18,"ordens":1626,"revisao":111}
+{"at":"2026-10-30T13:08:31.381Z","hora":"30/10/2026, 10:08:31","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":112,"registros":2}
+{"at":"2026-10-30T13:08:36.898Z","hora":"30/10/2026, 10:08:36","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":113,"registros":2}
+{"at":"2026-10-30T13:30:36.644Z","hora":"30/10/2026, 10:30:36","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":114,"registros":3}
+{"at":"2026-10-30T13:30:41.834Z","hora":"30/10/2026, 10:30:41","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":115,"registros":3}
+{"at":"2026-10-30T14:06:34.137Z","hora":"30/10/2026, 11:06:34","event":"DBSRV.BACKUP_CONCLUIDO","arquivo":"ordem-certa-2026-10-30T14-06-33-632Z.sqlite"}

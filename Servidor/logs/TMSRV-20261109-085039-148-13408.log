@@ -1,0 +1,3 @@
+{"at":"2026-11-09T11:50:39.247Z","hora":"09/11/2026, 08:50:39","event":"TMSRV.ready","host":"127.0.0.1","port":4173}
+{"at":"2026-11-09T11:51:07.781Z","hora":"09/11/2026, 08:51:07","event":"TMSRV.OPERACAO_RECUSADA","requisicao":"d6d4bbf3","usuario":"nao autenticado","metodo":"GET","ip":"127.0.0.1","rota":"/favicon.ico","status":404,"motivo":"Arquivo nao encontrado."}
+{"at":"2026-11-09T11:51:14.253Z","hora":"09/11/2026, 08:51:14","event":"TMSRV.OPERACAO_RECUSADA","requisicao":"b200ee71","usuario":"nao autenticado","metodo":"POST","ip":"127.0.0.1","rota":"/api/login","status":503,"motivo":"DBSRV indisponivel. Verifique o servidor de dados."}

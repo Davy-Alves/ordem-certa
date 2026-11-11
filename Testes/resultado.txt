@@ -1,0 +1,23 @@
+PASS executaveis iniciam e conversam
+PASS cliente Windows WebView2 renderiza login
+PASS estado exige login
+PASS DBSRV rejeita acesso sem chave
+PASS login valido sem expor hash
+PASS estado nao expoe credenciais
+PASS edicoes simultaneas em campos distintos preservadas
+PASS conflito no mesmo campo retorna 409
+PASS operador nao promove proprio perfil
+PASS operador nao exclui ordens
+PASS responsavel altera status da propria ordem
+PASS conclusao bloqueada por pendencia
+PASS reenvio nao duplica historico
+PASS historico acima de 5000 entradas preservado
+PASS backup SQLite gerado
+PASS troca de senha funciona
+PASS dados e sessao persistem apos reiniciar
+PASS logout invalida sessao
+PASS interface salva pelo novo protocolo de operacoes
+PASS conflito mostra recuperacao sem sobrescrever o servidor
+PASS exportacao Excel pela interface
+PASS interface login e sete telas sem erro JavaScript
+{"passed":22,"testDirectory":"C:\\Users\\Satel\\AppData\\Local\\Temp\\ordem-certa-test-awPcyq","productionDataUntouched":true}

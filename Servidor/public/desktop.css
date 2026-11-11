@@ -1,0 +1,39 @@
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+.dashboard-filters {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)) !important;
+  gap: 10px !important;
+}
+.dashboard-filters select,
+.dashboard-filters input {
+  min-width: 0;
+  width: 100%;
+}
+.desktop-recovery {
+  position: fixed;
+  bottom: 24px;
+  left: 270px;
+  right: 24px;
+  z-index: 100000;
+  background: #39221a;
+  border: 1px solid #e6a04d;
+  border-radius: 12px;
+  padding: 16px;
+  color: #fff;
+  box-shadow: 0 8px 40px #0008;
+}
+.desktop-recovery p {
+  margin: 0 0 10px;
+  white-space: normal;
+}
+.desktop-recovery button {
+  background: #fff;
+  color: #172033;
+  border: 0;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-right: 8px;
+  cursor: pointer;
+}

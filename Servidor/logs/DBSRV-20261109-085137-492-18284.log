@@ -1,0 +1,9 @@
+{"at":"2026-11-09T11:51:37.665Z","hora":"09/11/2026, 08:51:37","event":"DBSRV.INICIADO","host":"127.0.0.1","porta":4174}
+{"at":"2026-11-09T11:51:37.706Z","hora":"09/11/2026, 08:51:37","event":"DBSRV.CONTAS_CARREGADAS","contas":18,"ordens":1626,"revisao":158}
+{"at":"2026-11-09T11:51:51.468Z","hora":"09/11/2026, 08:51:51","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"login","revisao":159,"registros":0}
+{"at":"2026-11-09T11:51:51.499Z","hora":"09/11/2026, 08:51:51","event":"DBSRV.CONTA_SALVA","usuario":"Davi","conta":"Davi","registro":"3688e615-6646-4625-a3f4-9a69f4704070","revisao":159,"campos":"credencial"}
+{"at":"2026-11-09T11:51:51.501Z","hora":"09/11/2026, 08:51:51","event":"DBSRV.LOGIN_APROVADO","conta":"Davi","usuario":"3688e615-6646-4625-a3f4-9a69f4704070","ip":"127.0.0.1"}
+{"at":"2026-11-09T11:52:37.675Z","hora":"09/11/2026, 08:52:37","event":"DBSRV.SESSOES_EXPIRADAS","quantidade":1}
+{"at":"2026-11-09T12:01:17.868Z","hora":"09/11/2026, 09:01:17","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"login","revisao":160,"registros":0}
+{"at":"2026-11-09T12:01:18.050Z","hora":"09/11/2026, 09:01:18","event":"DBSRV.CONTA_SALVA","usuario":"Davi","conta":"Davi","registro":"3688e615-6646-4625-a3f4-9a69f4704070","revisao":160,"campos":"credencial"}
+{"at":"2026-11-09T12:01:18.060Z","hora":"09/11/2026, 09:01:18","event":"DBSRV.LOGIN_APROVADO","conta":"Davi","usuario":"3688e615-6646-4625-a3f4-9a69f4704070","ip":"127.0.0.1"}

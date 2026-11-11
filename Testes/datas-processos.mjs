@@ -1,0 +1,31 @@
+import fs from 'node:fs';
+import vm from 'node:vm';
+import crypto from 'node:crypto';
+import assert from 'node:assert/strict';
+import { authorize } from '../Servidor/src/rules.mjs';
+const app=fs.readFileSync(new URL('../Servidor/public/app.js',import.meta.url),'utf8');
+const ctx=vm.createContext({Date,crypto:crypto.webcrypto,structuredClone,collaborators:[],historyEntries:[],currentUser:{login:'teste'},localStorage:{getItem:()=>null,setItem(){}},alert(){},setTimeout(){}});
+vm.runInContext([...app.matchAll(/^(?:async )?function \w+\([^\n]*\) \{[\s\S]*?^\}/gm)].map(m=>m[0]).join('\n'),ctx);
+vm.runInContext(app.slice(app.indexOf('const stages ='),app.indexOf('const elements =')),ctx);
+vm.runInContext(fs.readFileSync(new URL('../Servidor/public/desktop-diagnostics.js',import.meta.url),'utf8'),ctx);
+vm.runInContext('var activeProcessTab=processTabs[0].label;persist=()=>{};render=()=>{};audit=()=>{};currentCollaborator=()=>null;setImportStatus=()=>{};',ctx);
+const before={id:'test-dates',osNumber:'TESTE-DATAS',stage:'Orcamento',voices:{},processDetails:{processTermo:{endDate:'2026-06-01',notes:'Preservar'}}};
+const row={'OS':'TESTE-DATAS','STATUS FINAL':'FINALIZADO','STATUS ORÇAMENTO':'CONCLUIDO','TIPO DE OBRA':'Melhoria','POSTES PROJETO':12,'POSTES AMBIENTAL':6,'POSTES PARALELISMO':8,'NECESSARIO DOC AMBIENTAL/PODA ?':'SIM','PROCESSO PARALELISMO E TRAVESSIA ? 2':'SIM','DATA AMBIENTAL FINALIZADO':'14/07/2026','DATA TRAVESSIA FINALIZADO':'22/07/2026','DATA FECHAMENTO':'30/07/2026'};
+ctx.orders=[structuredClone(before)];
+ctx.updateOrderStatusesFromRows([row],'teste.xlsx');
+const after=ctx.orders[0];
+assert.equal(after.processDetails?.processAmbiental?.endDate,'2026-07-14','Data ambiental deve chegar ao detalhe exigido pelo servidor, fora de PROCESSOS exclusivo.');
+assert.equal(after.processDetails?.processParalelismo?.endDate,'2026-07-22','Cada processo deve conservar sua propria data, sem usar DATA FECHAMENTO.');
+assert.equal(after.processDetails.processTermo.notes,'Preservar');
+assert.equal(before.processDetails.processAmbiental,undefined,'Nao pode alterar o snapshot anterior.');
+assert.doesNotThrow(()=>authorize('orders',before,after,{accessLevel:100},{collaborators:[]}));
+const noDates={...row,'DATA AMBIENTAL FINALIZADO':'','DATA TRAVESSIA FINALIZADO':'','NECESSARIO DOC AMBIENTAL/PODA ?':'CONCLUIDO','PROCESSO PARALELISMO E TRAVESSIA ? 2':'CONCLUIDO'};
+for(const mode of ['', 'PROCESSOS']) {
+  const update=ctx.buildStatusUpdate({...noDates,'STATUS CAMPO':mode});
+  const details=ctx.processDetailsWithSheetCompletion(before,update);
+  assert.ok(!details.processAmbiental?.endDate,'Nao inventar data ambiental a partir do fechamento ou de hoje.');
+  assert.ok(!details.processParalelismo?.endDate,'Nao inventar data de travessia.');
+}
+ctx.orders=[structuredClone(before)];ctx.updateOrderStatusesFromRows([noDates],'teste.xlsx');
+assert.throws(()=>authorize('orders',before,ctx.orders[0],{accessLevel:100},{collaborators:[]}),/sem data de conclusao/);
+console.log('PASS: importacao comum envia datas especificas, preserva detalhes e snapshot, servidor aceita dados completos e mantem bloqueio quando faltam datas.');

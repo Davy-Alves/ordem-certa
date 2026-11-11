@@ -1,0 +1,13 @@
+{
+  "tmHost": "0.0.0.0",
+  "tmPort": 443,
+  "dbPort": 4174,
+  "publicUrl": "https://ordemcerta.suaempresa.com.br",
+  "dataDir": "data",
+  "backupMinutes": 60,
+  "internalKey": "SUBSTITUA_PELA_CHAVE_DO_SEU_SERVIDOR_JSON",
+  "tls": {
+    "key": "certificados/privkey.pem",
+    "cert": "certificados/fullchain.pem"
+  }
+}

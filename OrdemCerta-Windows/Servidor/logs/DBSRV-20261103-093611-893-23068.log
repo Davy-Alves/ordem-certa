@@ -1,0 +1,14 @@
+[DBSRV] Iniciando migracao de 41111 registros de historico para a nova tabela...
+[DBSRV] Falha na migracao: TypeError: Provided value cannot be bound to SQLite parameter 8.
+    at file:///C:/Users/SATEL%20CE/Downloads/OrdemCerta-Windows/OrdemCerta-Windows/Servidor/src/dbsrv.mjs:36:20
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  code: 'ERR_INVALID_ARG_TYPE'
+}
+{"at":"2026-11-03T12:36:12.366Z","hora":"03/11/2026, 09:36:12","event":"DBSRV.INICIADO","host":"127.0.0.1","porta":4174}
+{"at":"2026-11-03T12:36:12.515Z","hora":"03/11/2026, 09:36:12","event":"DBSRV.CONTAS_CARREGADAS","contas":18,"ordens":1626,"revisao":135}
+{"at":"2026-11-03T12:38:01.005Z","hora":"03/11/2026, 09:38:01","event":"DBSRV.OPERACAO_RECUSADA","operacao":"commit","ip":"127.0.0.1","status":500,"motivo":"Provided value cannot be bound to SQLite parameter 8."}
+{"at":"2026-11-03T12:38:25.393Z","hora":"03/11/2026, 09:38:25","event":"DBSRV.OPERACAO_RECUSADA","operacao":"commit","ip":"127.0.0.1","status":500,"motivo":"Provided value cannot be bound to SQLite parameter 8."}
+{"at":"2026-11-03T12:39:39.831Z","hora":"03/11/2026, 09:39:39","event":"DBSRV.OPERACAO_RECUSADA","operacao":"commit","ip":"127.0.0.1","status":500,"motivo":"Provided value cannot be bound to SQLite parameter 8."}
+{"at":"2026-11-03T12:39:45.202Z","hora":"03/11/2026, 09:39:45","event":"DBSRV.OPERACAO_RECUSADA","operacao":"commit","ip":"127.0.0.1","status":500,"motivo":"Provided value cannot be bound to SQLite parameter 8."}

@@ -1,0 +1,1 @@
+PASS backup manual, restauracao, preservacao do banco anterior e invalidacao de sessoes

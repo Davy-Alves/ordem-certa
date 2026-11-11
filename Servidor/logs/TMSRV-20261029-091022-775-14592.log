@@ -1,0 +1,4 @@
+{"at":"2026-10-29T12:10:23.028Z","hora":"29/10/2026, 09:10:23","event":"TMSRV.ready","host":"127.0.0.1","port":4173}
+{"at":"2026-10-29T12:10:34.225Z","hora":"29/10/2026, 09:10:34","event":"TMSRV.OPERACAO_RECUSADA","requisicao":"f68a6941","usuario":"nao autenticado","metodo":"GET","ip":"127.0.0.1","rota":"/favicon.ico","status":404,"motivo":"Arquivo nao encontrado."}
+{"at":"2026-10-29T12:34:19.582Z","hora":"29/10/2026, 09:34:19","event":"TMSRV.OPERACAO_RECUSADA","requisicao":"7fc5d391","usuario":"nao autenticado","metodo":"POST","ip":"127.0.0.1","rota":"/api/login","status":503,"motivo":"DBSRV indisponivel. Verifique o servidor de dados."}
+{"at":"2026-10-29T12:34:24.418Z","hora":"29/10/2026, 09:34:24","event":"TMSRV.OPERACAO_RECUSADA","requisicao":"c6cbc212","usuario":"nao autenticado","metodo":"POST","ip":"127.0.0.1","rota":"/api/login","status":503,"motivo":"DBSRV indisponivel. Verifique o servidor de dados."}

@@ -1,0 +1,4 @@
+{"at":"2026-10-30T15:00:37.677Z","hora":"30/10/2026, 12:00:37","event":"DBSRV.INICIADO","host":"127.0.0.1","porta":4174}
+{"at":"2026-10-30T15:00:37.821Z","hora":"30/10/2026, 12:00:37","event":"DBSRV.CONTAS_CARREGADAS","contas":18,"ordens":1626,"revisao":115}
+{"at":"2026-10-30T15:06:15.922Z","hora":"30/10/2026, 12:06:15","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":116,"registros":2}
+{"at":"2026-10-30T15:06:20.875Z","hora":"30/10/2026, 12:06:20","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":117,"registros":2}

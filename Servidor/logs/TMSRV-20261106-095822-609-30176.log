@@ -1,0 +1,2 @@
+{"at":"2026-11-06T12:58:23.053Z","hora":"06/11/2026, 09:58:23","event":"TMSRV.ready","host":"127.0.0.1","port":4173}
+{"at":"2026-11-06T12:58:40.597Z","hora":"06/11/2026, 09:58:40","event":"TMSRV.OPERACAO_RECUSADA","requisicao":"e2dea0a8","usuario":"nao autenticado","metodo":"GET","ip":"127.0.0.1","rota":"/favicon.ico","status":404,"motivo":"Arquivo nao encontrado."}

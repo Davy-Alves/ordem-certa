@@ -1,0 +1,2 @@
+{"at":"2026-10-30T15:39:08.718Z","hora":"30/10/2026, 12:39:08","event":"DBSRV.INICIADO","host":"127.0.0.1","porta":4174}
+{"at":"2026-10-30T15:39:08.863Z","hora":"30/10/2026, 12:39:08","event":"DBSRV.CONTAS_CARREGADAS","contas":18,"ordens":1626,"revisao":117}

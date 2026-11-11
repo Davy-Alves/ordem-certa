@@ -1,0 +1,14 @@
+import { DatabaseSync, backup } from 'node:sqlite';
+import fs from 'node:fs';
+import path from 'node:path';
+import { config } from './common.mjs';
+const cfg=config();
+const file=path.join(cfg.dataDir,'ordem-certa.sqlite');
+if(!fs.existsSync(file))throw new Error('Banco nao encontrado.');
+const db=new DatabaseSync(file,{readOnly:true});
+const dir=path.join(cfg.dataDir,'backups');fs.mkdirSync(dir,{recursive:true});
+const destination=path.join(dir,`manual-${new Date().toISOString().replace(/[:.]/g,'-')}.sqlite`);
+await backup(db,destination);db.close();
+const check=new DatabaseSync(destination,{readOnly:true});
+if(check.prepare('PRAGMA integrity_check').get().integrity_check!=='ok')throw new Error('Falha de integridade no backup.');
+check.close();console.log('Backup verificado: '+destination);

@@ -1,0 +1,3 @@
+{"at":"2026-11-03T16:11:33.652Z","hora":"03/11/2026, 13:11:33","event":"DBSRV.INICIADO","host":"127.0.0.1","porta":4174}
+{"at":"2026-11-03T16:11:33.697Z","hora":"03/11/2026, 13:11:33","event":"DBSRV.CONTAS_CARREGADAS","contas":18,"ordens":1626,"revisao":152}
+{"at":"2026-11-03T16:15:23.097Z","hora":"03/11/2026, 13:15:23","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":153,"registros":202}

@@ -1,0 +1,13 @@
+{"at":"2026-11-11T13:10:10.057Z","hora":"11/11/2026, 10:10:10","event":"DBSRV.INICIADO","host":"127.0.0.1","porta":4174}
+{"at":"2026-11-11T13:10:10.105Z","hora":"11/11/2026, 10:10:10","event":"DBSRV.CONTAS_CARREGADAS","contas":18,"ordens":1826,"revisao":182}
+{"at":"2026-11-11T13:10:20.979Z","hora":"11/11/2026, 10:10:20","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":183,"registros":203}
+{"at":"2026-11-11T13:10:21.006Z","hora":"11/11/2026, 10:10:21","event":"DBSRV.CONTA_SALVA","usuario":"Davi","conta":"Bruno","registro":"21564dbf-ce07-4bd9-bd48-89a604c830b2","revisao":183,"campos":"accessLevel"}
+{"at":"2026-11-11T13:10:38.819Z","hora":"11/11/2026, 10:10:38","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":184,"registros":202}
+{"at":"2026-11-11T13:10:38.849Z","hora":"11/11/2026, 10:10:38","event":"DBSRV.CONTA_SALVA","usuario":"Davi","conta":"Bruno","registro":"21564dbf-ce07-4bd9-bd48-89a604c830b2","revisao":184,"campos":"accessLevel"}
+{"at":"2026-11-11T13:11:27.156Z","hora":"11/11/2026, 10:11:27","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":185,"registros":2}
+{"at":"2026-11-11T13:11:27.189Z","hora":"11/11/2026, 10:11:27","event":"DBSRV.CONTA_SALVA","usuario":"Davi","conta":"Bruno","registro":"21564dbf-ce07-4bd9-bd48-89a604c830b2","revisao":185,"campos":"credencial"}
+{"at":"2026-11-11T13:12:14.440Z","hora":"11/11/2026, 10:12:14","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Bruno","operacao":"login","revisao":186,"registros":0}
+{"at":"2026-11-11T13:12:14.475Z","hora":"11/11/2026, 10:12:14","event":"DBSRV.CONTA_SALVA","usuario":"Bruno","conta":"Bruno","registro":"21564dbf-ce07-4bd9-bd48-89a604c830b2","revisao":186,"campos":"credencial"}
+{"at":"2026-11-11T13:12:14.487Z","hora":"11/11/2026, 10:12:14","event":"DBSRV.LOGIN_APROVADO","conta":"Bruno","usuario":"21564dbf-ce07-4bd9-bd48-89a604c830b2","ip":"127.0.0.1"}
+{"at":"2026-11-11T13:32:53.957Z","hora":"11/11/2026, 10:32:53","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":187,"registros":202}
+{"at":"2026-11-11T13:32:53.985Z","hora":"11/11/2026, 10:32:53","event":"DBSRV.CONTA_SALVA","usuario":"Davi","conta":"Bruno","registro":"21564dbf-ce07-4bd9-bd48-89a604c830b2","revisao":187,"campos":"accessLevel"}

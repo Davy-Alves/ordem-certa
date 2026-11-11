@@ -1,0 +1,12 @@
+{
+  "integrity": "ok",
+  "collectionsMatchSource": true,
+  "counts": {
+    "orders": 1262,
+    "users": 21,
+    "collaborators": 35,
+    "historyEntries": 23640,
+    "distributionEntries": 50
+  },
+  "productionSessions": 0
+}

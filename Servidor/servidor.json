@@ -1,0 +1,9 @@
+{
+  "tmHost": "127.0.0.1",
+  "tmPort": 4173,
+  "dbPort": 4174,
+  "publicUrl": "http://127.0.0.1:4173",
+  "dataDir": "data",
+  "backupMinutes": 60,
+  "internalKey": "4169b033ca9f15f1cbd74d707131fe10d5e6ed67082648588c05ba424008838478287275d660d7355543c92c19915687"
+}

@@ -1,0 +1,13 @@
+{"at":"2026-10-30T15:51:56.189Z","hora":"30/10/2026, 12:51:56","event":"DBSRV.INICIADO","host":"127.0.0.1","porta":4174}
+{"at":"2026-10-30T15:51:56.389Z","hora":"30/10/2026, 12:51:56","event":"DBSRV.CONTAS_CARREGADAS","contas":18,"ordens":1626,"revisao":117}
+{"at":"2026-10-30T16:05:55.011Z","hora":"30/10/2026, 13:05:55","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":118,"registros":2}
+{"at":"2026-10-30T16:06:01.759Z","hora":"30/10/2026, 13:06:01","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":119,"registros":2}
+{"at":"2026-10-30T16:06:07.887Z","hora":"30/10/2026, 13:06:07","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":120,"registros":2}
+{"at":"2026-10-30T16:06:30.659Z","hora":"30/10/2026, 13:06:30","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":121,"registros":2}
+{"at":"2026-10-30T16:13:33.835Z","hora":"30/10/2026, 13:13:33","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":122,"registros":2}
+{"at":"2026-10-30T16:13:46.464Z","hora":"30/10/2026, 13:13:46","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":123,"registros":2}
+{"at":"2026-10-30T16:14:02.188Z","hora":"30/10/2026, 13:14:02","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":124,"registros":2}
+{"at":"2026-10-30T16:14:06.901Z","hora":"30/10/2026, 13:14:06","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":125,"registros":2}
+{"at":"2026-10-30T16:14:12.514Z","hora":"30/10/2026, 13:14:12","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":126,"registros":2}
+{"at":"2026-10-30T16:14:22.741Z","hora":"30/10/2026, 13:14:22","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":127,"registros":2}
+{"at":"2026-10-30T16:14:31.817Z","hora":"30/10/2026, 13:14:31","event":"DBSRV.SALVAMENTO_CONCLUIDO","usuario":"Davi","operacao":"save","revisao":128,"registros":2}

@@ -1,0 +1,758 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ordem Certa OS</title>
+    <link rel="stylesheet" href="styles.css?v=gestao-usuarios-20261022">
+    <style>
+      body.app-page #loginScreen {
+        display: none !important;
+      }
+      .boot-error {
+        position: fixed;
+        left: 50%;
+        top: 32px;
+        z-index: 9999;
+        display: none;
+        max-width: min(720px, calc(100vw - 32px));
+        transform: translateX(-50%);
+        padding: 14px 16px;
+        border: 1px solid #ef4444;
+        border-radius: 10px;
+        background: #1f0f13;
+        color: #fecaca;
+        font: 600 14px/1.4 system-ui, sans-serif;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, .35);
+      }
+      .boot-error strong {
+        display: block;
+        margin-bottom: 4px;
+        color: #fff;
+      }
+    </style>
+    <script src="xlsx.full.min.js"></script>
+    <script>
+      (() => {
+        const key = "ordem-certa-desktop-session-v1";
+        const maxAgeMs = 8 * 60 * 60 * 1000;
+        try {
+          const session = JSON.parse(sessionStorage.getItem(key) || localStorage.getItem(key));
+          if (!session?.user || Date.now() - session.startedAt > maxAgeMs) {
+            window.location.replace(`index.html?expired=${Date.now()}`);
+          }
+        } catch {
+          window.location.replace(`index.html?expired=${Date.now()}`);
+        }
+      })();
+    </script>
+  <link rel="stylesheet" href="desktop.css">
+</head>
+  <body class="app-page">
+    <div class="satel-loader" id="satelLoader" role="status" aria-live="polite">
+      <div class="satel-loader-card">
+        <div class="satel-loader-logo" aria-label="Satel Ceara">
+          <span class="satel-loader-symbol">s</span>
+          <div>
+            <strong>satel</strong>
+            <small>Ceara</small>
+          </div>
+        </div>
+        <div class="satel-loader-bar"><span></span></div>
+        <p>Carregando Ordem Certa...</p>
+      </div>
+    </div>
+    <div class="boot-error" id="bootError">
+      <strong>Erro ao carregar o sistema</strong>
+      <span id="bootErrorMessage">Atualize a pagina com Ctrl + F5.</span>
+    </div>
+    <script>
+      window.addEventListener("error", (event) => {
+        const box = document.querySelector("#bootError");
+        const message = document.querySelector("#bootErrorMessage");
+        if (!box || !message) return;
+        message.textContent = event.message || "Falha ao carregar algum arquivo do sistema.";
+        box.style.display = "block";
+      });
+      window.addEventListener("unhandledrejection", (event) => {
+        const box = document.querySelector("#bootError");
+        const message = document.querySelector("#bootErrorMessage");
+        if (!box || !message) return;
+        message.textContent = event.reason?.message || String(event.reason || "Falha ao carregar dados do sistema.");
+        box.style.display = "block";
+      });
+    </script>
+    <section class="login-screen" id="loginScreen">
+      <form class="login-card" id="loginForm">
+        <div class="brand-mark large">OC</div>
+        <h1>Ordem Certa</h1>
+        <p>Login obrigatorio para acessar o sistema.</p>
+        <label>
+          Usuario
+          <input id="loginUser" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" required>
+        </label>
+        <label>
+          Senha
+          <input id="loginPassword" type="password" autocomplete="off" data-lpignore="true" data-1p-ignore="true" readonly onfocus="this.removeAttribute('readonly')" required>
+        </label>
+        <button class="primary-button full" type="submit">Entrar</button>
+        <div class="login-message" id="loginMessage"></div>
+      </form>
+    </section>
+
+    <div class="app-shell" id="appShell">
+      <aside class="sidebar">
+        <div class="brand-row">
+          <div class="brand-mark">OC</div>
+          <div>
+            <strong>Ordem Certa</strong>
+            <span>OS Workspace</span>
+          </div>
+        </div>
+
+        <nav class="side-nav" aria-label="Navegacao principal">
+          <button class="side-item active" type="button" data-screen="dashboard">Dashboard</button>
+          <button class="side-item" type="button" data-screen="board">Ordens</button>
+          <button class="side-item" type="button" data-screen="processes">Processos</button>
+          <button class="side-item" type="button" data-screen="adequacies">Adequacoes</button>
+          <button class="side-item" type="button" data-screen="pendencies">Pendencias</button>
+          <button class="side-item" type="button" data-screen="account">Minha Conta</button>
+          <button class="side-item" type="button" data-screen="admin">Administrador</button>
+        </nav>
+
+        <section class="distribution-panel" aria-label="Ultimas ordens distribuidas">
+          <div class="distribution-panel-head">
+            <div>
+              <span>Distribuicao</span>
+              <strong>Ultimas Ordens</strong>
+            </div>
+            <button class="distribution-toggle" type="button" id="distributionToggleButton" aria-expanded="false">Maximizar</button>
+          </div>
+          <div class="distribution-list" id="distributionList">
+            <small class="distribution-empty">Nenhuma distribuicao ainda.</small>
+          </div>
+        </section>
+
+        <section class="presence-card" aria-label="Status dos colaboradores">
+          <div class="presence-card-head">
+            <span class="eyebrow">Equipe</span>
+            <strong>Online agora</strong>
+          </div>
+          <div class="presence-list" id="presenceList">
+            <small>Carregando status...</small>
+          </div>
+        </section>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <span class="breadcrumb">Workspace / Operacao</span>
+            <h1 id="screenTitle">Dashboard</h1>
+          </div>
+          <div class="topbar-actions"></div>
+        </header>
+
+        <section class="screen active" id="dashboardScreen">
+          <div class="dashboard-scroll">
+            <section class="dashboard-filter-panel">
+              <div>
+                <span class="eyebrow">Filtros</span>
+                <h2>Visao gerencial</h2>
+              </div>
+              <div class="dashboard-filters">
+                <select id="dashboardStageFilter"></select>
+                <select id="dashboardCollaboratorFilter"></select>
+                <select id="dashboardRegionalFilter"></select>
+                <select id="dashboardDeadlineFilter">
+                  <option value="Todos">Todos os prazos</option>
+                  <option value="Dentro">Dentro do prazo</option>
+                  <option value="ANS">Fora ANS</option>
+                </select>
+                <select id="dashboardProcessFilter"></select>
+                <select id="dashboardPendencyFilter"></select>
+                <select id="dashboardPeriodPreset">
+                  <option value="today">Hoje</option>
+                  <option value="yesterday">Ontem</option>
+                  <option value="week">Esta semana</option>
+                  <option value="month" selected>Este mes</option>
+                  <option value="custom">Personalizado</option>
+                </select>
+                <input id="dashboardStartDate" type="date">
+                <input id="dashboardEndDate" type="date">
+              </div>
+            </section>
+
+            <section class="dashboard-section">
+              <div class="section-title">
+                <h2>Indicadores principais</h2>
+              </div>
+              <div class="metrics-grid" id="dashboardMetrics"></div>
+            </section>
+
+            <section class="dashboard-layout">
+              <div class="dashboard-main-column">
+                <section class="panel">
+                  <div class="panel-head">
+                    <h2>Etapas</h2>
+                  </div>
+                  <div class="bars-list" id="stageBars"></div>
+                </section>
+
+                <section class="panel">
+                  <div class="panel-head">
+                    <h2>Regionais</h2>
+                  </div>
+                  <div class="responsible-report" id="regionalDashboard"></div>
+                </section>
+
+                <section class="panel">
+                  <div class="panel-head">
+                    <h2>Produtividade</h2>
+                  </div>
+                  <div class="chart-row" id="productivityChart"></div>
+                </section>
+              </div>
+
+              <aside class="dashboard-side-column">
+                <section class="panel">
+                  <div class="panel-head">
+                    <h2>Ranking</h2>
+                  </div>
+                  <div class="ranking-list" id="rankingList"></div>
+                </section>
+
+                <section class="panel">
+                  <div class="panel-head">
+                    <h2>Processos</h2>
+                  </div>
+                  <div class="report-list" id="dashboardProcessSummary"></div>
+                  <div class="history-list compact-list" id="dashboardProcessOrders"></div>
+                </section>
+
+                <section class="panel">
+                  <div class="panel-head">
+                    <h2>Pendencias</h2>
+                  </div>
+                  <div class="report-list" id="dashboardPendencySummary"></div>
+                  <div class="history-list compact-list" id="dashboardPendencyOrders"></div>
+                </section>
+              </aside>
+            </section>
+          </div>
+        </section>
+
+        <section class="screen" id="boardScreen">
+          <div class="board-toolbar">
+            <div class="stage-tabs" id="stageTabs"></div>
+            <div class="filters">
+              <label class="import-button compact-import" id="fieldUpdateImportControl" hidden>
+                Importar Atualizacao de Campo
+                <input id="fieldUpdateInput" type="file" accept=".xlsx,.xls,.csv">
+              </label>
+              <input id="searchInput" type="search" placeholder="Buscar OS, cliente, municipio...">
+              <select id="urgencyFilter">
+                <option value="Todas">Todas</option>
+                <option value="ANS">Prazo ANS</option>
+              </select>
+            </div>
+          </div>
+          <div class="kanban-board" id="kanbanBoard"></div>
+        </section>
+
+        <section class="screen" id="processesScreen">
+          <div class="board-toolbar">
+            <div class="stage-tabs" id="processTabs"></div>
+            <div class="filters">
+              <input id="processSearchInput" type="search" placeholder="Buscar OS, cliente, municipio...">
+              <select id="processUrgencyFilter">
+                <option value="Todas">Todas</option>
+                <option value="ANS">Prazo ANS</option>
+              </select>
+            </div>
+          </div>
+          <div class="process-grid" id="processGrid"></div>
+        </section>
+
+        <section class="screen" id="adequaciesScreen">
+          <div class="board-toolbar">
+            <div class="stage-tabs" id="adequacyTabs"></div>
+            <div class="filters">
+              <input id="adequacySearchInput" type="search" placeholder="Buscar OS, cliente, adequacao...">
+              <select id="adequacyUrgencyFilter">
+                <option value="Todas">Todas</option>
+                <option value="ANS">Prazo ANS</option>
+              </select>
+            </div>
+          </div>
+          <div class="process-grid" id="adequacyGrid"></div>
+        </section>
+
+        <section class="screen" id="pendenciesScreen">
+          <div class="board-toolbar">
+            <div>
+              <span class="eyebrow">Ordens paralisadas</span>
+              <h2>Pendencias ativas</h2>
+            </div>
+            <div class="filters">
+              <input id="pendencySearchInput" type="search" placeholder="Buscar OS, cliente, pendencia...">
+              <select id="pendencyTypeFilter">
+                <option value="Todas pendencias">Todas pendencias</option>
+              </select>
+            </div>
+          </div>
+          <div class="pendency-summary" id="pendencySummary"></div>
+          <div class="pendency-list" id="pendencyList"></div>
+        </section>
+
+        <section class="screen" id="accountScreen">
+          <section class="panel account-home-panel">
+            <div class="user-card account-user-card">
+              <div class="sidebar-profile-row">
+                <div class="profile-avatar small" id="currentUserAvatar">U</div>
+                <div>
+                  <span id="currentUserName">Usuario</span>
+                  <small id="currentUserPresence">Offline</small>
+                </div>
+              </div>
+              <small id="currentUserRole">Nivel --</small>
+              <div class="account-productivity" id="currentUserProductivity">
+                <small>Produtividade da conta</small>
+              </div>
+              <div class="account-period">
+                <label>De <input id="accountStartDate" type="date"></label>
+                <label>Ate <input id="accountEndDate" type="date"></label>
+              </div>
+              <button class="ghost-button full" type="button" id="logoutButton">Logout</button>
+            </div>
+          </section>
+          <div class="profile-layout">
+            <section class="panel profile-panel">
+              <div class="panel-head">
+                <div>
+                  <span class="eyebrow">Minha Conta</span>
+                  <h2>Perfil do usuario</h2>
+                </div>
+              </div>
+              <form class="profile-form" id="profileForm">
+                <div class="profile-main">
+                  <div class="profile-photo-box">
+                    <div class="profile-avatar large" id="profilePhotoPreview">U</div>
+                    <label class="ghost-button profile-photo-action">
+                      Trocar foto
+                      <input id="profilePhotoInput" type="file" accept="image/*">
+                    </label>
+                    <button class="ghost-button" type="button" id="profilePhotoRemove">Remover foto</button>
+                  </div>
+                  <div class="profile-fields">
+                    <label>Nome do colaborador<input id="profileFullName" type="text" readonly></label>
+                    <label>Usuario de login<input id="profileLogin" type="text" readonly></label>
+                    <label>Funcao ou setor<input id="profileRole" type="text" readonly></label>
+                    <label>Nivel de acesso<input id="profileAccessLevel" type="text" readonly></label>
+                    <label>Status de conexao<input id="profileOnlineStatus" type="text" readonly></label>
+                    <label>Status de disponibilidade
+                      <select id="profileAvailability">
+                        <option>Disponivel</option>
+                        <option>Ocupado</option>
+                        <option>Em reuniao</option>
+                        <option>Ausente</option>
+                        <option>Em intervalo</option>
+                      </select>
+                    </label>
+                    <label class="wide">Informacao de status
+                      <input id="profileStatusMessage" type="text" maxlength="50" placeholder="Ex.: Em campo, Em reuniao, Disponivel">
+                    </label>
+                  </div>
+                </div>
+                <button class="primary-button" type="submit">Salvar perfil</button>
+                <span class="import-status" id="profileStatus"></span>
+              </form>
+            </section>
+
+            <section class="panel profile-panel">
+              <div class="panel-head">
+                <h2>Alterar senha</h2>
+              </div>
+              <form class="profile-form password-form" id="passwordForm">
+                <label>Senha atual<input id="currentPassword" type="password" autocomplete="current-password" required></label>
+                <label>Nova senha<input id="newPassword" type="password" autocomplete="new-password" required></label>
+                <label>Confirmar nova senha<input id="confirmPassword" type="password" autocomplete="new-password" required></label>
+                <button class="primary-button" type="submit">Alterar senha</button>
+                <span class="import-status" id="passwordStatus"></span>
+              </form>
+            </section>
+          </div>
+        </section>
+
+        <section class="screen" id="adminScreen">
+          <div class="admin-shell">
+            <aside class="admin-menu" aria-label="Menu do administrador">
+              <button class="admin-tab active" type="button" data-admin-tab="users">Usuarios</button>
+              <button class="admin-tab" type="button" data-admin-tab="permissions">Permissoes</button>
+              <button class="admin-tab" type="button" data-admin-tab="data">Gestao de Dados</button>
+              <button class="admin-tab" type="button" data-admin-tab="csv">Importacao CSV</button>
+              <button class="admin-tab" type="button" data-admin-tab="audit">Historico/Auditoria</button>
+              <button class="admin-tab" type="button" data-admin-tab="settings">Configuracoes</button>
+            </aside>
+
+            <div class="admin-content">
+              <section class="admin-section active" id="adminTabUsers">
+                <div class="admin-grid two user-management-grid">
+                  <section class="panel user-directory-panel">
+                    <div class="panel-head">
+                      <div><h2>Pessoas e acessos</h2><p class="os-sub">Consulte função, etapas, processos e posição na fila.</p></div>
+                      <button class="ghost-button" type="button" id="newUserButton">Nova pessoa</button>
+                    </div>
+                    <div class="user-directory-tools">
+                      <label class="user-search-label">Buscar pessoa<input id="userSearch" type="search" placeholder="Nome, login, etapa ou processo"></label>
+                      <label>Mostrar<select id="userFilter"><option value="all">Todas as pessoas</option><option value="queue-off">Fora da fila automática</option><option value="no-stage">Sem etapa de trabalho</option><option value="no-process">Sem processos vinculados</option><option value="orphan">Sem conta ou sem colaborador</option></select></label>
+                      <label>Ordenar por<select id="userSort"><option value="name">Nome</option><option value="Levantamento de Campo">Fila de Campo</option><option value="Criacao de CAD">Fila de CAD</option><option value="Orcamento">Fila de Orçamento</option></select></label>
+                      <span id="userResultCount" class="user-result-count" aria-live="polite"></span>
+                    </div>
+                    <div class="user-list unified-person-list" id="userList"></div>
+                  </section>
+                  <section class="panel user-editor-panel" id="userEditorPanel">
+                    <div class="panel-head">
+                      <div><span class="eyebrow">Configuração de acesso</span><h2 id="userEditorTitle">Nova pessoa</h2><p class="os-sub">Configure a conta e confira o resumo antes de salvar.</p></div>
+                    </div>
+                    <form class="user-form user-editor-form" id="userForm">
+                      <input id="userId" type="hidden">
+                      <input id="collaboratorId" type="hidden">
+                      <select id="userCollaboratorId" class="hidden-admin-field" aria-hidden="true"></select>
+                      <section class="user-config-section">
+                        <h3>1. Dados da conta</h3>
+                        <div class="user-identity-grid">
+                          <label>Nome da pessoa<input id="userFullName" type="text" autocomplete="name" required></label>
+                          <label>Login do sistema<input id="userLoginName" type="text" autocomplete="username" required></label>
+                          <label class="user-password-field">Senha inicial ou nova senha<input id="userPassword" type="password" autocomplete="new-password" data-lpignore="true" data-1p-ignore="true" readonly onfocus="this.removeAttribute('readonly')" placeholder="Deixe vazio para manter a senha atual"><small>O usuário poderá trocar a senha depois.</small></label>
+                        </div>
+                      </section>
+                      <section class="user-config-section">
+                        <h3>2. Acesso geral ao sistema</h3>
+                        <div class="user-access-grid">
+                          <label>Perfil sugerido<select id="userAccessPreset"><option value="0">Consulta básica — nível 0</option><option value="31">Consulta e ajustes autorizados — nível 31</option><option value="51">Líder — nível 51</option><option value="61">Supervisor — nível 61</option><option value="71">Distribuição manual — nível 71</option><option value="81">Gestor — nível 81</option><option value="91">Administrador Master — nível 91</option><option value="custom">Nível personalizado</option></select></label>
+                          <label>Nível exato (0 a 100)<input id="userAccessLevel" type="number" min="0" max="100" required></label>
+                        </div>
+                        <div class="user-access-summary" id="userAccessSummary" aria-live="polite"></div>
+                      </section>
+                      <section class="user-config-section">
+                        <h3>3. Onde a pessoa trabalha</h3>
+                        <p class="os-sub">Marque as etapas e defina a posição da pessoa em cada fila.</p>
+                        <label class="queue-toggle"><input id="queueActive" type="checkbox" checked> Participa da distribuição automática</label>
+                        <div class="permission-grid user-stage-grid" id="permissionGrid"></div>
+                      </section>
+                      <section class="user-config-section">
+                        <h3>4. Processos que pode atender</h3>
+                        <p class="os-sub">Essa seleção libera as colunas de processo para a pessoa.</p>
+                        <div class="permission-grid process-permission-grid user-process-grid" id="processPermissionGrid"></div>
+                      </section>
+                      <div class="user-editor-actions"><button class="ghost-button" type="button" id="cancelUserEditButton">Cancelar</button><button class="primary-button" type="submit" id="saveUserButton">Salvar acesso</button></div>
+                    </form>
+                  </section>
+                </div>
+              </section>
+
+              <section class="admin-section" id="adminTabPermissions">
+                <section class="panel">
+                  <div class="panel-head">
+                    <h2>Permissoes por nivel</h2>
+                  </div>
+                  <div class="permissions-table" id="permissionsTable"></div>
+                </section>
+              </section>
+
+              <section class="admin-section" id="adminTabData">
+                <section class="panel">
+                  <div class="panel-head">
+                    <h2>Gestao de Dados</h2>
+                  </div>
+                  <div class="data-actions">
+                    <label class="import-button">
+                      Importar XLSX
+                      <input id="importInput" type="file" accept=".xlsx,.xls,.csv">
+                    </label>
+                    <label class="import-button">
+                      Importar Coordenadas
+                      <input id="coordinatesInput" type="file" accept=".xlsx,.xls,.csv">
+                    </label>
+                    <button class="ghost-button" type="button" id="linkedStatusButton">Atualizar Planilha</button>
+                    <button class="primary-button" type="button" id="newOrderButton">+ Nova OS</button>
+                  </div>
+                  <div class="data-actions monthly-export-actions">
+                    <label>Mes do relatorio<input id="ordersExportMonth" type="month"></label>
+                    <label>Tipo de ordens
+                      <select id="ordersExportType">
+                        <option value="all">Todas existentes</option>
+                        <option value="open">Nao concluidas</option>
+                        <option value="concluded">Concluidas</option>
+                        <option value="cancelSusp">Canceladas e suspensas</option>
+                        <option value="pendencies">Com pendencias</option>
+                      </select>
+                    </label>
+                    <button class="ghost-button" type="button" id="exportOrdersXlsxButton">Baixar planilha de ordens</button>
+                  </div>
+                  <span class="import-status" id="importStatus"></span>
+                  <p class="os-sub">Esses controles ficam restritos aos usuarios autorizados pelas permissoes do sistema.</p>
+                </section>
+              </section>
+              <section class="admin-section" id="adminTabCsv">
+                <section class="panel">
+                  <div class="panel-head">
+                    <h2>Importacao de CSV</h2>
+                  </div>
+              <div class="csv-panel">
+                <label class="import-button">
+                  Importar CSV usuarios
+                  <input id="userCsvInput" type="file" accept=".csv">
+                </label>
+                <p class="os-sub">Colunas esperadas: Nome do Colaborador, Usuario de Login, Senha, Nivel de Acesso.</p>
+                <div class="permission-row">
+                  <strong>Base diaria de ordens</strong>
+                  <div class="permission-meta">Use a aba Gestao de Dados para importar a base. A importacao adiciona apenas ordens novas e ignora numeros ja existentes.</div>
+                  <div class="permission-meta">Mapeamento: 1 Numero da Ordem, D/4 ANS, 7 Prioridade, 8 Cliente, 9 Municipio, 10 Regional, 13 Validador, X Ordem Remota.</div>
+                  <div class="permission-meta">O Dashboard calcula o prazo apenas pelo ANS, usando a Data de Recebimento salva na ordem.</div>
+                </div>
+              </div>
+                </section>
+              </section>
+              <section class="admin-section" id="adminTabAudit">
+                <section class="panel">
+                  <div class="panel-head">
+                    <h2>Painel de auditoria</h2>
+                    <div class="admin-actions">
+                      <button class="ghost-button" type="button" id="exportAuditCsvButton">Exportar CSV</button>
+                      <button class="ghost-button" type="button" id="exportAuditPdfButton">Exportar PDF</button>
+                    </div>
+                  </div>
+                  <div class="audit-filters">
+                    <input id="auditSearch" type="search" placeholder="Pesquisar registros...">
+                    <select id="auditUserFilter"></select>
+                    <input id="auditOsFilter" type="search" placeholder="Numero da OS">
+                    <select id="auditActionFilter"></select>
+                    <input id="auditStartDate" type="date">
+                    <input id="auditEndDate" type="date">
+                  </div>
+                  <div class="history-list" id="historyList"></div>
+                </section>
+              </section>
+<section class="admin-section" id="adminTabSettings">
+                <section class="panel">
+                  <div class="panel-head">
+                    <h2>Configuracoes</h2>
+                  </div>
+                  <div class="settings-list">
+                    <div class="permission-row"><strong>Sessao</strong><div class="permission-meta">Expira automaticamente conforme configurado no sistema.</div></div>
+                    <div class="permission-row"><strong>Seguranca</strong><div class="permission-meta">Senhas com hash e bloqueio por tentativas invalidas.</div></div>
+                  </div>
+                </section>
+              </section>
+            </div>
+          </div>
+        </section>
+</main>
+    </div>
+
+    <dialog class="order-modal" id="orderModal">
+      <form class="modal-card" id="orderForm" method="dialog">
+        <div class="modal-head">
+          <div>
+            <span class="eyebrow">Ordem de Servico</span>
+            <h2 id="modalTitle">Nova OS</h2>
+          </div>
+          <button class="icon-button" type="button" id="closeModalButton">X</button>
+        </div>
+
+        <input id="orderId" type="hidden">
+
+        <div class="form-grid">
+          <label>Numero da OS<input id="osNumber" type="text" required></label>
+          <label>Cliente<input id="clientName" type="text" required></label>
+          <label>ANS<input id="ans" type="text" readonly></label>
+          <label>Prioridade
+            <select id="priority">
+              <option>Alta</option>
+              <option selected>Media</option>
+              <option>Baixa</option>
+            </select>
+          </label>
+          <label>Etapa
+            <select id="stage"></select>
+          </label>
+          <input id="owner" type="hidden">
+          <label>Data de Recebimento<input id="receivedDate" type="date" required></label>
+          <input id="startDate" type="hidden">
+          <input id="finishDate" type="hidden">
+          <input id="poles" type="hidden">
+          <input id="structures" type="hidden">
+          <label>Municipio<input id="city" type="text"></label>
+          <label>Regional<input id="regional" type="text"></label>
+          <label>Validador da Ordem<input id="orderValidator" type="text"></label>
+          <input type="checkbox" id="remoteOrder" hidden>
+          <label>Tecnico<select id="fieldTech"></select></label>
+          <label>Coordenada X UTM 24S<input id="coordinateX" type="text" inputmode="decimal" placeholder="X"></label>
+          <label>Coordenada Y UTM 24S<input id="coordinateY" type="text" inputmode="decimal" placeholder="Y"></label>
+          <label>Cadista<select id="cadist"></select></label>
+          <label>Orcamentista<select id="budgeter"></select></label>
+          <input id="fieldStatus" type="hidden">
+          <input id="cadStatus" type="hidden">
+          <input id="budgetStatus" type="hidden">
+          <label class="wide">Link dos Arquivos
+            <span class="link-input-row">
+              <input id="filesLink" type="url" placeholder="https://">
+              <button class="ghost-button link-open-button" type="button" id="openFilesLinkButton">Abrir link</button>
+            </span>
+          </label>
+          <label class="wide">Observacoes<textarea id="notes" rows="3"></textarea></label>
+        </div>
+
+        <div class="locked-sections" id="lockedSections"></div>
+
+        <section class="process-boxes">
+          <h3>Processos complementares e dados de processo</h3>
+          <div class="process-chips">
+            <label><input type="checkbox" id="processParalelismo"><span>Paralelismo e Travessia</span></label>
+            <label><input type="checkbox" id="processAmbiental"><span>Ambiental</span></label>
+            <label><input type="checkbox" id="processLt"><span>Travessia LT</span></label>
+            <label><input type="checkbox" id="processFerrovia"><span>Travessia Ferrovia</span></label>
+            <label><input type="checkbox" id="processAcude"><span>Travessia Acude</span></label>
+            <label><input type="checkbox" id="processRio"><span>Travessia Rio</span></label>
+            <label><input type="checkbox" id="processTermo"><span>Termo de Passagem</span></label>
+          </div>
+          <div class="process-detail-list hidden" id="processDetailsContainer"></div>
+          <input id="processType" type="hidden">
+          <input id="processOwner" type="hidden">
+          <input id="processStatus" type="hidden">
+          <input id="processStartDate" type="hidden">
+          <input id="processEndDate" type="hidden">
+          <input id="processNotes" type="hidden">
+          <input id="processLink" type="hidden">
+          <input id="processFiles" type="hidden">
+        </section>
+
+        <section class="process-boxes">
+          <h3>Voz do Projeto</h3>
+          <div class="voice-stack">
+            <div class="voice-row voice-row-project">
+              <div class="voice-title"><strong>Voz do Projeto</strong><span>Tipo de obra e codigo principal</span></div>
+              <label>Tipo de obra
+                <select id="voiceProjectType">
+                  <option></option>
+                  <option>Eletricos de Distribuicao (MT e BT)</option>
+                  <option>Construcao de Ramais (Alimentadores/Ligacao)</option>
+                  <option>Grandes Clientes (Grupo A) para Orcamento de Conexao</option>
+                  <option>Atendimento a Urbanizacoes</option>
+                  <option>Melhoria</option>
+                  <option>Reforco</option>
+                  <option>Reforma</option>
+                  <option>Deslocamento de Redes</option>
+                </select>
+              </label>
+              <label>Postes<input id="voiceProjectPoles" type="number" min="0"></label>
+              <label>Codigo<input id="voiceProject" type="text" readonly></label>
+              <label>Rep.<select id="voiceProjectRepeat"><option>1x</option><option>2x</option><option>3x</option><option>4x</option></select></label>
+            </div>
+
+            <div class="voice-row" data-voice-key="paralelismo">
+              <div class="voice-title"><strong>Paralelismo</strong><span>Calculado por postes</span></div>
+              <label>Postes<input id="voiceParalelismoPoles" type="number" min="0"></label>
+              <label>Codigo<input id="voiceParalelismo" type="text" readonly></label>
+              <label>Rep.<select id="voiceParalelismoRepeat"><option>1x</option><option>2x</option><option>3x</option><option>4x</option></select></label>
+            </div>
+
+            <div class="voice-row" data-voice-key="ambiental">
+              <div class="voice-title"><strong>Ambiental</strong><span>Calculado por postes</span></div>
+              <label>Postes<input id="voiceAmbientalPoles" type="number" min="0"></label>
+              <label>Codigo<input id="voiceAmbiental" type="text" readonly></label>
+              <label>Rep.<select id="voiceAmbientalRepeat"><option>1x</option><option>2x</option><option>3x</option><option>4x</option></select></label>
+            </div>
+
+            <div class="voice-row" data-voice-key="termo">
+              <div class="voice-title"><strong>Termo de Passagem</strong><span>Calculado por postes</span></div>
+              <label>Postes<input id="voiceTermoPoles" type="number" min="0"></label>
+              <label>Codigo<input id="voiceTermo" type="text" readonly></label>
+              <label>Rep.<select id="voiceTermoRepeat"><option>1x</option><option>2x</option><option>3x</option><option>4x</option></select></label>
+            </div>
+
+            <div class="voice-row" data-voice-key="travessiaLt">
+              <div class="voice-title"><strong>Travessia de LT</strong><span>Calculado por postes</span></div>
+              <label>Postes<input id="voiceTravessiaLtPoles" type="number" min="0"></label>
+              <label>Codigo<input id="voiceTravessiaLt" type="text" readonly></label>
+              <label>Rep.<select id="voiceTravessiaLtRepeat"><option>1x</option><option>2x</option><option>3x</option><option>4x</option></select></label>
+            </div>
+
+            <div class="voice-row" data-voice-key="travessiaRio">
+              <div class="voice-title"><strong>Travessia de Rio</strong><span>Calculado por postes</span></div>
+              <label>Postes<input id="voiceTravessiaRioPoles" type="number" min="0"></label>
+              <label>Codigo<input id="voiceTravessiaRio" type="text" readonly></label>
+              <label>Rep.<select id="voiceTravessiaRioRepeat"><option>1x</option><option>2x</option><option>3x</option><option>4x</option></select></label>
+            </div>
+          </div>
+        </section>
+
+        <div class="modal-actions">
+          <button class="ghost-button" type="button" id="deleteOrderButton">Excluir OS</button>
+          <button class="ghost-button" type="button" id="returnToCadButton">Devolver para Campo</button>
+          <button class="ghost-button" type="button" id="returnToCadStageButton">Voltar para CAD</button>
+          <button class="ghost-button" type="button" id="nextStageButton">Mover para proxima etapa</button>
+          <button class="primary-button" type="submit">Salvar OS</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="order-modal" id="pendencyModal">
+      <form class="modal-card pendency-card" id="pendencyForm" method="dialog">
+        <div class="modal-head">
+          <div>
+            <span class="eyebrow">Pendencias</span>
+            <h2 id="pendencyTitle">Pendencias da OS</h2>
+          </div>
+          <button class="icon-button" type="button" id="closePendencyButton">X</button>
+        </div>
+        <input id="pendencyOrderId" type="hidden">
+        <div class="pendency-options" id="pendencyOptions"></div>
+        <label class="wide">Observacao<textarea id="pendencyNote" rows="3" placeholder="Observacao opcional"></textarea></label>
+        <div class="modal-actions">
+          <button class="primary-button" type="submit">Salvar pendencias</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="desktop-diagnostics.js"></script>
+    <script src="desktop-recovery.js"></script>
+<script src="app.js?v=gestao-usuarios-20261022"></script>
+<script src="activity-log.js"></script>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
